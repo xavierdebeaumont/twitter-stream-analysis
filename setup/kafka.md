@@ -5,7 +5,7 @@ We will setup Kafka and twitter stream in two separate docker processes in a ded
 - Establish SSH connection
 
   ```bash
-  ssh streamify-kafka
+  ssh streaming-kafka-instance
   ```
 
 - Clone git repo and cd into Kafka folder
@@ -30,7 +30,7 @@ We will setup Kafka and twitter stream in two separate docker processes in a ded
 - Start Kafka 
 
   ```bash
-  cd ~/streaming-project/kafka && \
+  cd ~/twitter_stream_analysis/kafka && \
   docker-compose build && \
   docker-compose up 
   ```
@@ -39,7 +39,7 @@ We will setup Kafka and twitter stream in two separate docker processes in a ded
 
 - Build the docker image and run it
   ```bash
-  cd ~/streaming-project/producer && \
+  cd ~/twitter_stream_analysis/producer && \
   docker build -t twitter-stream:1.0 . && \
   docker run -itd \
     --network kafka-stream-network \
@@ -58,4 +58,10 @@ We will setup Kafka and twitter stream in two separate docker processes in a ded
   docker logs --follow twitter-stream
   ```
 
-- You should see one topic, your topic_id
+    You should see one topic, your topic_id
+
+- To stop the running docker
+
+  ```bash
+  docker stop twitter-stream
+  ```
