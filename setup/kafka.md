@@ -17,7 +17,7 @@ We will setup Kafka and twitter stream in two separate docker processes in a ded
 - Install docker & docker-compose
 
   ```bash
-  bash ~/streaming-project/scripts/vm_setup.sh && \
+  bash ~/twitter_stream_analysis/scripts/vm_setup.sh && \
   exec newgrp docker
   ```
 
@@ -26,6 +26,11 @@ We will setup Kafka and twitter stream in two separate docker processes in a ded
   ```bash
   docker network create -d bridge kafka-stream-network
   ```
+
+<!-- - Setup Kafka Address
+  ```bash
+  export KAFKA_ADDRESS= "<your-kafka-address>"
+  ``` -->
 
 - Start Kafka 
 

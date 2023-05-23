@@ -10,7 +10,7 @@ def parse_args():
     parser = argparse.ArgumentParser()
 
     parser.add_argument('--bearer_token', type=str, required=True)
-    parser.add_argument('--stream_rule', nargs='+', type=str, required=True)
+    parser.add_argument('--stream_rule', type=str, required=True)
     parser.add_argument('--topic_id', type=str, required=True)
 
     return parser.parse_args()
@@ -22,6 +22,7 @@ kafka_bootstrap_servers = 'broker:9092'
 def write_to_kafka(data, producer, stream_rule, kafka_topic):
     data["stream_rule"] = stream_rule
     data_formatted = json.dumps(data).encode("UTF-8")
+    print(data_formatted)
     producer.produce(kafka_topic, data_formatted)
     producer.flush()
 
@@ -40,7 +41,6 @@ class KafkaStreamListener(tweepy.StreamingClient):
         result = tweet_data
         result["user"] = user_data
 
-        print(result)
         write_to_kafka(result, self.producer, self.stream_rule, self.kafka_topic)
 
     def on_error(self, status):
@@ -55,5 +55,13 @@ if __name__ =="__main__":
     stream_listener = KafkaStreamListener(args.topic_id, args.bearer_token, args.stream_rule)
     print(args.topic_id + '\n')
 
+    print(args.stream_rule)
+
+    rules = stream_listener.get_rules().data
+    if rules is not None:
+        existing_rules = [rule.id for rule in stream_listener.get_rules().data]
+        stream_listener.delete_rules(ids=existing_rules)
+
     stream_listener.add_rules(tweepy.StreamRule(args.stream_rule))
+    print(stream_listener.get_rules().data)
     stream_listener.filter(tweet_fields=tweet_fields, expansions=expansions, user_fields=user_fields)
