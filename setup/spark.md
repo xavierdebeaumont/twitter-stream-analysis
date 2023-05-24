@@ -4,12 +4,13 @@ We will start the Spark Streaming process in the DataProc cluster we created to 
 
   ```bash
   ssh streamify-spark
-  
+  ```
+
 - Clone git repo
 
   ```bash
-  git clone https://github.com/xavierdebeaumont/twitter_stream_analysis.git && \
-  cd twitter_stream_analysis/spark_streaming
+  git clone https://github.com/xavierdebeaumont/twitter_stream_analysis.git
+  cd twitter_stream_analysis/spark-streaming
   ```
 
 - Set the environment variables -

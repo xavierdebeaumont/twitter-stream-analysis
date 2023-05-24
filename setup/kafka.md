@@ -11,7 +11,7 @@ We will setup Kafka and twitter stream in two separate docker processes in a ded
 - Clone git repo and cd into Kafka folder
 
   ```bash
-  git clone https://github.com/xavierdebeaumont/twitter_stream_analysis.git && \
+  git clone https://github.com/xavierdebeaumont/twitter_stream_analysis.git
   ```
 
 - Install docker & docker-compose
@@ -48,7 +48,8 @@ We will setup Kafka and twitter stream in two separate docker processes in a ded
   exec newgrp docker
   cd ~/twitter_stream_analysis/producer && \
   docker build -t twitter-stream:1.0 . && \
-  docker run -e KAFKA_ADDRESS=$KAFKA_ADDRESS-itd \
+  docker run -e KAFKA_ADDRESS=$KAFKA_ADDRESS \
+    -itd \
     --name twitter-stream \
     --network kafka-stream-network \
     twitter-stream:1.0 \
