@@ -21,16 +21,17 @@ We will setup Kafka and twitter stream in two separate docker processes in a ded
   exec newgrp docker
   ```
 
-- Create the docker network to allowed the connection between the broker and the stream
+<!-- - Create the docker network to allowed the connection between the broker and the stream
 
   ```bash
   docker network create -d bridge kafka-stream-network
-  ```
+  ``` -->
 
-<!-- - Setup Kafka Address
+- Setup Kafka Address
   ```bash
   export KAFKA_ADDRESS= "<your-kafka-address>"
-  ``` -->
+  ```
+  **Note**: You will have to setup these env vars every time you create a new shell session. Or if you stop/start your VM
 
 - Start Kafka 
 
@@ -44,13 +45,15 @@ We will setup Kafka and twitter stream in two separate docker processes in a ded
 
 - Build the docker image and run it
   ```bash
+  exec newgrp docker
   cd ~/twitter_stream_analysis/producer && \
   docker build -t twitter-stream:1.0 . && \
-  docker run -itd \
+  docker run -e KAFKA_ADDRESS=$KAFKA_ADDRESS-itd \
+    --name twitter-stream \
     --network kafka-stream-network \
     twitter-stream:1.0 \
         --bearer_token "<your-bearer-token>" \
-        --topic_id "<your-topic-id>"
+        --topic_id "<your-topic-id>" \
         --stream_rule "<your-stream-rule>"
   ```
 

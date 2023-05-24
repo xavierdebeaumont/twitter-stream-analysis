@@ -16,8 +16,8 @@ def parse_args():
     return parser.parse_args()
 
 # Kafka configuration
-# KAFKA_ADDRESS = os.getenv('KAFKA_ADDRESS')
-kafka_bootstrap_servers = 'broker:9092'
+KAFKA_ADDRESS = os.getenv('KAFKA_ADDRESS')
+kafka_bootstrap_servers = f'{KAFKA_ADDRESS}:9092'
 
 def write_to_kafka(data, producer, stream_rule, kafka_topic):
     data["stream_rule"] = stream_rule
