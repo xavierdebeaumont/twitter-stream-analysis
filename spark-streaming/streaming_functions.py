@@ -1,5 +1,5 @@
 from pyspark.sql import SparkSession
-from pyspark.sql.functions import from_json, col, month, hour, dayofmonth, col, year, udf
+from pyspark.sql.functions import from_json, col, month, hour, dayofmonth, col, year, udf, to_timestamp
 
 @udf
 def string_decode(s, encoding='utf-8'):
@@ -15,7 +15,7 @@ def string_decode(s, encoding='utf-8'):
 
 def get_or_create_spark_session(app_name, master="yarn"):
     """
-    Creates or gecreated_at a Spark Session
+    Creates or gets a Spark Session
 
     Parameters:
         app_name : str
@@ -41,7 +41,7 @@ def create_kafka_read_stream(spark, kafka_address, kafka_port, topic, starting_o
         spark : SparkSession
             A SparkSession object
         kafka_address: str
-            Host address of the kafka boocreated_attrap server
+            Host address of the kafka bootstrap server
         topic : str
             Name of the kafka topic
         starting_offset: str
@@ -53,9 +53,9 @@ def create_kafka_read_stream(spark, kafka_address, kafka_port, topic, starting_o
     read_stream = (spark
                    .readStream
                    .format("kafka")
-                   .option("kafka.boocreated_attrap.servers", f"{kafka_address}:{kafka_port}")
+                   .option("kafka.bootstrap.servers", f"{kafka_address}:{kafka_port}")
                    .option("failOnDataLoss", False)
-                   .option("startingOffsecreated_at", starting_offset)
+                   .option("startingOffsets", starting_offset)
                    .option("subscribe", topic)
                    .load())
 
@@ -73,7 +73,7 @@ def process_stream(stream, stream_schema, topic):
         stream: DataStreamReader
     """
 
-    # read only value from the incoming message and convert the contencreated_at
+    # read only value from the incoming message and convert the contents
     # inside to the passed schema
     stream = (stream
               .selectExpr("CAST(value AS STRING)")
@@ -86,17 +86,14 @@ def process_stream(stream, stream_schema, topic):
 
     # Add month, day, hour to split the data into separate directories
     stream = (stream
-              .withColumn("created_at", (col("created_at")/1000).cast("created_at"))
-              .withColumn("year", year(col("created_at")))
-              .withColumn("month", month(col("created_at")))
-              .withColumn("hour", hour(col("created_at")))
-              .withColumn("day", dayofmonth(col("created_at")))
-              )
+            .withColumn("created_at", to_timestamp(col("created_at"), "yyyy-MM-dd'T'HH:mm:ss.SSS'Z'"))
+            )
 
-    # rectify string encoding
-    stream = (stream
-                .withColumn("text", string_decode("text"))
-    )
+
+    # # rectify string encoding
+    # stream = (stream
+    #             .withColumn("text", string_decode("text"))
+    # )
 
     return stream
 
@@ -123,7 +120,7 @@ def create_file_write_stream(stream, storage_path, checkpoint_path, trigger="120
     write_stream = (stream
                     .writeStream
                     .format(file_format)
-                    .partitionBy("month", "day", "hour")
+                    .partitionBy("year", "month", "day", "hour")
                     .option("path", storage_path)
                     .option("checkpointLocation", checkpoint_path)
                     .trigger(processingTime=trigger)

@@ -19,7 +19,7 @@ spark.streams.resetTerminated()
 raw_tweets = create_kafka_read_stream(
     spark, KAFKA_ADDRESS, KAFKA_PORT, RAW_TWEETS_TOPIC)
 raw_tweets = process_stream(
-    raw_tweets, schema[RAW_TWEETS_TOPIC], RAW_TWEETS_TOPIC)
+    raw_tweets, schema["raw_tweets"], RAW_TWEETS_TOPIC)
 
 # write a file to storage every 2 minutes in parquet format
 raw_tweets_writer = create_file_write_stream(raw_tweets,
