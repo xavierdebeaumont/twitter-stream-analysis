@@ -51,24 +51,24 @@ resource "google_compute_instance" "kafka_vm_instance" {
   }
 }
 
-# resource "google_compute_instance" "airflow_vm_instance" {
-#   name                      = "twitter-streaming-airflow-instance"
-#   machine_type              = "e2-standard-4"
-#   allow_stopping_for_update = true
+resource "google_compute_instance" "airflow_vm_instance" {
+  name                      = "twitter-streaming-airflow-instance"
+  machine_type              = "e2-standard-4"
+  allow_stopping_for_update = true
 
-#   boot_disk {
-#     initialize_params {
-#       image = var.vm_image
-#       size  = 30
-#     }
-#   }
+  boot_disk {
+    initialize_params {
+      image = var.vm_image
+      size  = 30
+    }
+  }
 
-#   network_interface {
-#     network = var.network
-#     access_config {
-#     }
-#   }
-# }
+  network_interface {
+    network = var.network
+    access_config {
+    }
+  }
+}
 
 resource "google_storage_bucket" "bucket" {
     name = "${local.data_lake_bucket}_${var.project}"
