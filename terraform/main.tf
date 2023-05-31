@@ -52,7 +52,7 @@ resource "google_compute_instance" "kafka_vm_instance" {
 }
 
 # resource "google_compute_instance" "airflow_vm_instance" {
-#   name                      = "streaming-airflow-instance"
+#   name                      = "twitter-streaming-airflow-instance"
 #   machine_type              = "e2-standard-4"
 #   allow_stopping_for_update = true
 
