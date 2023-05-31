@@ -21,12 +21,6 @@ We will setup Kafka and twitter stream in two separate docker processes in a ded
   exec newgrp docker
   ```
 
-<!-- - Create the docker network to allowed the connection between the broker and the stream
-
-  ```bash
-  docker network create -d bridge kafka-stream-network
-  ``` -->
-
 - Setup Kafka Address
   ```bash
   export KAFKA_ADDRESS= "<your-kafka-address>"
