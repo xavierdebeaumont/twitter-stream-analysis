@@ -87,6 +87,10 @@ def process_stream(stream, stream_schema, topic):
     # Add month, day, hour to split the data into separate directories
     stream = (stream
             .withColumn("created_at", to_timestamp(col("created_at"), "yyyy-MM-dd'T'HH:mm:ss.SSS'Z'"))
+            .withColumn("year", year(col("created_at")))
+            .withColumn("month", month(col("created_at")))
+            .withColumn("hour", hour(col("created_at")))
+            .withColumn("day", dayofmonth(col("created_at")))
             )
 
 
