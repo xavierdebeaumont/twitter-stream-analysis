@@ -17,11 +17,11 @@ SELECT
     lang,
     text,
     STRUCT(
-        created_at AS created_at,
-        description AS description,
-        id AS id,
-        name AS name,
-        username AS username
+        user.created_at AS created_at,
+        user.description AS description,
+        user.id AS id,
+        user.name AS name,
+        user.username AS username
     ) AS user,
     stream_rule
 FROM

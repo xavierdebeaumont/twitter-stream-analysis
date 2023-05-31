@@ -66,7 +66,7 @@ def create_empty_table(event,
         schema_fields = events_schema,
         time_partitioning = {
             'type': 'HOUR',
-            'field': 'ts'
+            'field': 'created_at'
             },
         exists_ok = True
     )

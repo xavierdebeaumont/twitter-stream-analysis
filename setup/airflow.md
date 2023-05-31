@@ -24,6 +24,12 @@ We will setup airflow on docker in a dedicated compute instance. dbt is setup in
 
   - You can use [sftp](https://youtu.be/ae-CV2KfoN0?t=2442) to transfer the file.
 
+- Set the file to be readable.
+
+    ```bash
+    sudo chmod a+r ~/.google/credentials/google_credentials.json
+    ```
+
 - Set the evironment variables (same as Terraform values)-
 
   - GCP Project ID

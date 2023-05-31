@@ -16,7 +16,7 @@ EVENTS = ['raw_tweets'] # we have for now one event
 
 GCP_PROJECT_ID = os.environ.get('GCP_PROJECT_ID')
 GCP_GCS_BUCKET = os.environ.get('GCP_GCS_BUCKET')
-BIGQUERY_DATASET = os.environ.get('BIGQUERY_DATASET', 'twitter-stream_stg')
+BIGQUERY_DATASET = os.environ.get('BIGQUERY_DATASET', 'stream_stg')
 
 EXECUTION_MONTH = '{{ logical_date.strftime("%-m") }}'
 EXECUTION_DAY = '{{ logical_date.strftime("%-d") }}'

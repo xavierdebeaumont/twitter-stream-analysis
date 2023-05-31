@@ -44,13 +44,13 @@ variable "credentials" {
 
 variable "stg_bq_dataset" {
   description = "Storage class type for your bucket. Check official docs for more info."
-  default     = "twitter-streaming_stg"
+  default     = "stream_stg"
   type        = string
 }
 
 variable "prod_bq_dataset" {
   description = "Storage class type for your bucket. Check official docs for more info."
-  default     = "twitter-streaming_prod"
+  default     = "stream_prod"
   type        = string
 }
 
