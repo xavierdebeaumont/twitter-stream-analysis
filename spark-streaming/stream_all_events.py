@@ -3,7 +3,7 @@ from streaming_functions import *
 from schema import schema
 
 # Kafka Topics
-RAW_TWEETS_TOPIC = "twitter_stream"
+RAW_TWEETS_TOPIC = "raw_tweets"
 
 KAFKA_PORT = "9092"
 

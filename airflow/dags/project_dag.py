@@ -21,7 +21,8 @@ BIGQUERY_DATASET = os.environ.get('BIGQUERY_DATASET', 'twitter-stream_stg')
 EXECUTION_MONTH = '{{ logical_date.strftime("%-m") }}'
 EXECUTION_DAY = '{{ logical_date.strftime("%-d") }}'
 EXECUTION_HOUR = '{{ logical_date.strftime("%-H") }}'
-EXECUTION_DATETIME_STR = '{{ logical_date.strftime("%m%d%H") }}'
+EXECUTION_YEAR = '{{ logical_date.strftime("%-Y") }}'
+EXECUTION_DATETIME_STR = '{{ logical_date.strftime("%Y%m%d%H") }}'
 
 TABLE_MAP = { f"{event.upper()}_TABLE" : event for event in EVENTS}
 
@@ -63,7 +64,7 @@ with DAG(
         staging_table_name = event
         insert_query = f"{{% include 'sql/{event}.sql' %}}" #extra {} for f-strings escape
         external_table_name = f'{staging_table_name}_{EXECUTION_DATETIME_STR}'
-        events_data_path = f'{staging_table_name}/month={EXECUTION_MONTH}/day={EXECUTION_DAY}/hour={EXECUTION_HOUR}'
+        events_data_path = f'{staging_table_name}/year={EXECUTION_YEAR}/month={EXECUTION_MONTH}/day={EXECUTION_DAY}/hour={EXECUTION_HOUR}'
         events_schema = schema[event]
 
         create_external_table_task = create_external_table(event,
