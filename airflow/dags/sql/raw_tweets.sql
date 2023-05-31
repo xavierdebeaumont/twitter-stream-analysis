@@ -25,4 +25,4 @@ SELECT
     ) AS user,
     stream_rule
 FROM
-    {{ BIGQUERY_DATASET }}.{{ RAW_TWEETS_TABLE}}_{{ logical_date.strftime("%m%d%H") }}
+    {{ BIGQUERY_DATASET }}.{{ RAW_TWEETS_TABLE}}_{{ logical_date.strftime("%Y%m%d%H") }}
