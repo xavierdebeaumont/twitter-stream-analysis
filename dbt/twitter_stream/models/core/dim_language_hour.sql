@@ -6,6 +6,7 @@ with language_hour_counts as (
         language,
         date_trunc('hour', created_at) as hour,
         count(*) as frequency
+        stream_rule as stream_rule,
     from {{ ref('fact_tweets') }}
     group by lang, hour
 ),
@@ -17,6 +18,7 @@ ranked_language_hour as (
         hour,
         frequency,
         row_number() over (partition by hour order by frequency desc) as rank
+        stream_rule as stream_rule,
     from language_hour_counts
 )
 
@@ -25,5 +27,6 @@ select
     lang,
     hour,
     frequency
+    stream_rule as stream_rule,
 from ranked_language_hour
 order by hour, frequency desc

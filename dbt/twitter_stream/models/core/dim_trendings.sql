@@ -3,7 +3,8 @@
 -- Extract trending hashtags from raw_tweets
 with trending_hashtags as (
     select
-        regexp_extract_all(lower(text), r'#[a-z0-9_]+') as hashtags
+        regexp_extract_all(lower(text), r'#[a-z0-9_]+') as hashtags,
+        stream_rule as stream_rule,
     from {{ ref('fact_tweets') }}
 ),
 
@@ -11,6 +12,7 @@ with trending_hashtags as (
 flattened_hashtags as (
     select
         unnest(hashtags) as hashtag
+        stream_rule as stream_rule,
     from trending_hashtags
 )
 
@@ -18,6 +20,7 @@ flattened_hashtags as (
 select
     hashtag,
     count(*) as frequency
+    stream_rule as stream_rule,
 from flattened_hashtags
 group by hashtag
 order by frequency desc
