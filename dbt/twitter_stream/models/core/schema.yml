@@ -1,0 +1,22 @@
+version: 2
+
+models:
+  - name: dim_user
+    description: >
+      User information.
+
+  - name: dim_language
+    description: >
+      language code conversion.
+      
+  - name: fact_tweets
+    description: >
+      All the tweets available.
+
+  - name: dim_trendings
+    description: >
+      Trending hashtags by hour.
+
+  - name: dim_language_hour
+    description: >
+      Trendingg languages by hour.
