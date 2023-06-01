@@ -20,3 +20,14 @@ models:
   - name: dim_language_hour
     description: >
       Trendingg languages by hour.
+
+sources:
+  - name: seed
+    schema: public
+    tables:
+      - name: lang_names
+        seed:
+          enabled: true
+          # Specify the path to the seed file
+          files:
+            - path: seeds/lang_names.csv
