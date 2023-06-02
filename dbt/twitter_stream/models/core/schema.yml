@@ -5,21 +5,29 @@ models:
     description: >
       User information.
 
-  - name: dim_language
+  - name: dim_tweet
     description: >
-      language code conversion.
+      Information about the tweet.
       
   - name: fact_tweets
     description: >
       All the tweets available.
 
-  - name: dim_trendings
+  - name: trending_hashtags_hourly
     description: >
       Trending hashtags by hour.
 
-  - name: dim_language_hour
+  - name: language_usage_hourly
     description: >
-      Trendingg languages by hour.
+      Trending languages by hour.
+  
+  - name: wide_stream
+    description: >
+      Grouped data from reporting purpose.
+  
+  - name: dim_time
+    description: >
+      Time of the tweet.
 
 sources:
   - name: seed
