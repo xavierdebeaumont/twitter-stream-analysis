@@ -51,12 +51,17 @@ with DAG(
     
     initate_dbt_task = BashOperator(
         task_id = 'dbt_initiate',
-        bash_command = 'cd /dbt/twitter_stream && dbt deps && dbt seed --select state_codes --profiles-dir . --target prod'
+        bash_command = 'cd /dbt/twitter_stream && dbt deps && dbt seed --select lang_names --profiles-dir . --target dev'
+    )
+
+    staging_dbt_task = BashOperator(
+        task_id = 'dbt_twitter_stream_run_staging',
+        bash_command = 'cd /dbt/twitter_stream && dbt deps && dbt run --models staging --profiles-dir . --target dev'
     )
 
     execute_dbt_task = BashOperator(
-        task_id = 'dbt_twitter_stream_run',
-        bash_command = 'cd /dbt/twitter_stream && dbt deps && dbt run --profiles-dir . --target prod'
+        task_id = 'dbt_twitter_stream_run_prod',
+        bash_command = 'cd /dbt/twitter_stream && dbt deps && dbt run --models core --profiles-dir . --target prod'
     )
 
     for event in EVENTS:
@@ -96,4 +101,5 @@ with DAG(
         execute_insert_query_task >> \
         delete_external_table_task  >> \
         initate_dbt_task >> \
+        staging_dbt_task >> \
         execute_dbt_task

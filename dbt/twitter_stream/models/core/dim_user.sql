@@ -6,4 +6,4 @@ select distinct
     user.name,
     user.username,
     user.description
-from {{ ref('stg_raw_tweets') }}, unnest([user]) as user
+from {{ source('staging', 'stg_raw_tweets') }}, unnest([user]) as user

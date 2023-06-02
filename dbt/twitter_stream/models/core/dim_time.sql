@@ -9,5 +9,5 @@ select
     extract(hour from created_at) as hour
 from (
     select distinct created_at
-    from {{ ref('stg_raw_tweets') }}
+    from {{ source('staging', 'stg_raw_tweets') }}
 )

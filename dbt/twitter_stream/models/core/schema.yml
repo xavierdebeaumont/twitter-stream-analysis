@@ -39,3 +39,12 @@ sources:
           # Specify the path to the seed file
           files:
             - path: seeds/lang_names.csv
+
+
+sources:
+    - name: staging
+      database: "{{ env_var('GCP_PROJECT_ID') }}"
+      schema: stream_stg
+      tables:
+        - name: stg_raw_tweets
+        - name: lang_names
