@@ -3,9 +3,8 @@ twitter_stream:
     dev:
       dataset: stream_stg
       fixed_retries: 1
-      keyfile: twitter-stream/google_credentials.json
       location: europe-west9
-      method: service-account
+      method: oauth
       priority: interactive
       project: '{{ env_var(''GCP_PROJECT_ID'') }}'
       threads: 4
@@ -14,9 +13,8 @@ twitter_stream:
     prod:
       dataset: stream_prod
       fixed_retries: 1
-      keyfile: twitter-stream/google_credentials.json
       location: europe-west9
-      method: service-account
+      method: oauth
       priority: interactive
       project: '{{ env_var(''GCP_PROJECT_ID'') }}'
       threads: 4

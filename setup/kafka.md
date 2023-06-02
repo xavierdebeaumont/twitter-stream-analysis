@@ -48,7 +48,7 @@ We will setup Kafka and twitter stream in two separate docker processes in a ded
     --network kafka-stream-network \
     twitter-stream:1.0 \
         --bearer_token "<your-bearer-token>" \
-        --topic_id "<your-topic-id>" \
+        --topic_id raw_tweets \
         --stream_rule "<your-stream-rule>"
   ```
 

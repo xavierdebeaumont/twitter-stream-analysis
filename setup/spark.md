@@ -3,7 +3,7 @@ We will start the Spark Streaming process in the DataProc cluster we created to 
 - Establish SSH connection to the **master node**
 
   ```bash
-  ssh streamify-spark
+  ssh streaming-spark-instance
   ```
 
 - Clone git repo

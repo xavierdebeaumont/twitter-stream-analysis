@@ -8,9 +8,9 @@ with language_hour_counts as (
         EXTRACT(YEAR FROM created_at) as year,
         EXTRACT(DAY FROM created_at) as day,
         count(*) as frequency,
-        stream_rule as stream_rule
+        keyword as keyword
     from {{ ref('dim_tweet') }}
-    group by language, hour, year, day, stream_rule
+    group by language, hour, year, day, keyword
 ),
 
 -- Rank languages within each hour
@@ -22,7 +22,7 @@ ranked_language_hour as (
         day,
         frequency,
         row_number() over (partition by hour order by frequency desc) as rank,
-        stream_rule as stream_rule
+        keyword as keyword
     from language_hour_counts
 )
 
@@ -31,6 +31,6 @@ select
     hour,
     CONCAT(year, '-', LPAD(CAST(day AS STRING), 2, '0')) as date,
     frequency,
-    stream_rule as stream_rule
+    keyword as keyword
 from ranked_language_hour
 order by hour, date, frequency desc
