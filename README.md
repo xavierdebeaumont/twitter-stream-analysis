@@ -1,7 +1,5 @@
 # twitter_stream_analysis
 
-## Description :
-
 ## Objective
 
 The project will stream the twitter api and create a data pipeline that consumes the real-time data. The data coming in is about tweet and its associated user. The data will be processed in real-time and stored to the data lake periodically (every two minutes). The hourly batch job will then consume this data, apply transformations, and create the desired tables for our dashboard to generate analytics. We will try to analyze trendings and language used on a certain topic.
