@@ -5,12 +5,11 @@ with language_hour_counts as (
     select
         language,
         EXTRACT(HOUR FROM created_at) as hour,
-        EXTRACT(YEAR FROM created_at) as year,
-        EXTRACT(DAY FROM created_at) as day,
+        DATE_TRUNC(created_at, HOUR) as truncated_hour,
         count(*) as frequency,
         keyword as keyword
     from {{ ref('dim_tweet') }}
-    group by language, hour, year, day, keyword
+    group by language, hour, truncated_hour, keyword
 ),
 
 -- Rank languages within each hour
@@ -18,8 +17,7 @@ ranked_language_hour as (
     select
         language,
         hour,
-        year,
-        day,
+        truncated_hour,
         frequency,
         row_number() over (partition by hour order by frequency desc) as rank,
         keyword as keyword
@@ -27,10 +25,10 @@ ranked_language_hour as (
 )
 
 select
-    language as lang,
+    language as language,
     hour,
-    CONCAT(year, '-', LPAD(CAST(day AS STRING), 2, '0')) as date,
+    truncated_hour as date,
     frequency,
     keyword as keyword
 from ranked_language_hour
-order by hour, date, frequency desc
+order by hour, truncated_hour, frequency desc

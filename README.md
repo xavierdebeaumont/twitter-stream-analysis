@@ -1,16 +1,16 @@
 # twitter_stream_analysis
 
-## Description
+## Description :
 
-### Objective
+## Objective
 
 The project will stream the twitter api and create a data pipeline that consumes the real-time data. The data coming in is about tweet and its associated user. The data will be processed in real-time and stored to the data lake periodically (every two minutes). The hourly batch job will then consume this data, apply transformations, and create the desired tables for our dashboard to generate analytics. We will try to analyze trendings and language used on a certain topic.
 
-### Dataset
+## Dataset
 
 I used the twitter api to stream data with tweepy.
 
-### Tools & Technologies
+## Tools & Technologies
 
 - Cloud - [**Google Cloud Platform**](https://cloud.google.com)
 - Infrastructure as Code software - [**Terraform**](https://www.terraform.io)
@@ -23,13 +23,20 @@ I used the twitter api to stream data with tweepy.
 - Data Visualization - [**Data Studio**](https://datastudio.google.com/overview)
 - Language - [**Python**](https://www.python.org)
 
-### Architecture
+## Architecture
 
 ![streaming-architecture](images/Streaming-Architecture.png)
 
-### Final Result
+## Final Result
+
+### Dashboard made with Looker Studio
+
+It will automatically update when fresh data are appended to the bigquery tables.
 
 ![dashboard](images/dashboard.png)
+
+### Wordcloud made with python library wordcloud
+![wordcloud](images/wordcloud.png)
 
 ## Setup
 
